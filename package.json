@@ -1,10 +1,10 @@
 {
   "name": "convar",
-  "version": "1.0.1",
+  "version": "1.1.0",
   "description": "Get configuration value via default, config, environment variable, package, npm or cli with optional required error handling",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Warning: no test specified\" && exit 0"
+    "test": "mocha -R list test/*.js"
   },
   "keywords": [
     "config",
@@ -20,5 +20,9 @@
   "dependencies": {
     "envar": "^1.0.0",
     "jsonic": "^0.1.1"
+  },
+  "devDependencies": {
+    "mocha": "^2.1.0",
+    "should": "^4.6.0"
   }
 }
