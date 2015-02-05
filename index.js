@@ -36,7 +36,8 @@ function convar(name, requiredMessage, exitCode, logger) {
   return val
 }
 
-convar.package = _.cloneDeep(envar.import('package.json')) // default config details from package.json
+var pck = require(process.env.PWD + '/package.json')
+convar.package = _.cloneDeep(pck) // default config details from package.json
 var CONFIG = envar('config') || { } // config file path or empty default
 if ('string' == typeof CONFIG && fs.existsSync(CONFIG) && CONFIG.indexOf('.json') > 0) {
   CONFIG = jsonic(fs.readFileSync(CONFIG))
