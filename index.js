@@ -33,7 +33,7 @@ function convar(name, requiredMessage, exitCode, logger) {
       throw requiredMessage
     }
   }
-  if ('string' === typeof val) {
+  if ('string' === typeof val && (val.substr(0,1) == "{" || val.indexOf('://') < 0)) {
     try {
       var json = jsonic(val)
       val      = json
