@@ -7,6 +7,12 @@ var envar      = require('envar')  // alexindigo/node-envar. envar.prefix('my_ap
     }
   , _          = require('lodash')
   , fs         = require('fs')
+  , path       = require('path')
+  , pkg        = '/package.json'
+  , appPath    = path.dirname(require.main.filename)
+  , pkgPath    = fs.existsSync(process.env.PWD + pkg) ? process.env.PWD : path.dirname(require.main.filename)
+  , pck        = require(pkgPath + pkg)
+;
 
 
 
@@ -36,7 +42,6 @@ function convar(name, requiredMessage, exitCode, logger) {
   return val
 }
 
-var pck = require(process.env.PWD + '/package.json')
 convar.package = _.cloneDeep(pck) // default config details from package.json
 var CONFIG = envar('config') || { } // config file path or empty default
 if ('string' == typeof CONFIG && fs.existsSync(CONFIG) && CONFIG.indexOf('.json') > 0) {
