@@ -8,13 +8,15 @@ var envar      = require('envar')  // alexindigo/node-envar. envar.prefix('my_ap
   , _          = require('lodash')
   , fs         = require('fs')
   , path       = require('path')
+  , packpath   = require('packpath')
   , pkg        = '/package.json'
-  , appPath    = path.dirname(require.main.filename)
-  , pkgPath    = fs.existsSync(process.env.PWD + pkg) ? process.env.PWD : path.dirname(require.main.filename)
-  , pck        = require(pkgPath + pkg)
+  , appPath    = path.dirname(require.main.filename) + pkg // check first
+  , selfPath   = packpath.self() + pkg // check next
+  , parentPath = packpath.parent() + pkg // check next
+  , pwdPath    = process.env.PWD + pkg // check last
+  , pkgPath    = fs.existsSync(appPath) ? appPath : fs.existsSync(selfPath) ? selfPath : fs.existsSync(parentPath) ? parentPath : fs.existsSync(pwdPath) ? pwdPath : false
+  , pck        = (pkgPath) ? require(pkgPath) : {}
 ;
-
-
 
 function convar(name, requiredMessage, exitCode, logger) {
   var val = envar(name) || envar(name.toUpperCase()) || envar(name.toLowerCase())
